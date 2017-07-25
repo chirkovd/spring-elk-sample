@@ -1,0 +1,45 @@
+version: '2'
+services:
+
+  elasticsearch:
+     image: elasticsearch:5.1.2
+     restart: always
+     logging:
+        options:
+           max-size: "10m"
+           max-file: "10"
+     ports:
+        - 9200:9200
+     volumes:
+        - esdata:/usr/share/elasticsearch/data
+
+  logstash:
+     build: logstash
+     restart: always
+     logging:
+        options:
+           max-size: "10m"
+           max-file: "10"
+     command: logstash -f /config-dir/logstash.conf
+     volumes:
+       - ./logs:/usr/share/logstash/logs
+     ports:
+       - 5044:5044
+     links:
+       - elasticsearch
+
+  kibana:
+     image: kibana:5.1.2
+     restart: always
+     logging:
+        options:
+           max-size: "10m"
+           max-file: "10"
+     ports:
+        - 5601:5601
+     links:
+        - elasticsearch
+
+volumes:
+  esdata:
+    driver: local

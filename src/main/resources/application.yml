@@ -1,0 +1,10 @@
+logging:
+  level:
+    root: INFO
+    com.dipegroup.elk: DEBUG
+    org.springframework: INFO
+  file: logs/elk-sample.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %-5p %c{1}:%L - %m%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5p %c{1}:%L - %m%n"
+
